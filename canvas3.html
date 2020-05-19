@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <canvas class="canvas" width="5000px" height="5000px"></canvas>
+  <script>
+
+let cvs=document.querySelector('.canvas').getContext('2d')
+/* cvs.translate(500,500) */
+
+/* setInterval(function(){
+  cvs.beginPath()
+  cvs.rotate((36)*Math.PI/180) 
+  cvs.fillRect(0,0,50,5)
+},1000) */
+/* cvs.moveTo(500,500); */
+let discounttime=window.location.search.slice(1,)
+
+function showtime(){
+  cvs.clearRect(0,0,2000,2000)
+  cvs.save()
+  let data=new Date();
+let h=data.getHours()
+  let s=data.getSeconds()  
+let m=data.getMinutes()
+let showcontiner;
+if(discounttime-h>0){
+showcontiner=`还剩下${discounttime-h}小时开始`
+}
+else{
+  showcontiner=`开始抽取优惠卷中`
+}
+if(h>=12){
+  h=h-12
+}
+h=h-3;
+s=s-15;
+m=m-15
+
+cvs.beginPath()
+cvs.arc(500,500,300,0,2*Math.PI,true)
+cvs.strokeStyle='black';
+cvs.lineWidth=3
+cvs.stroke()
+/* cvs.closePath() */
+cvs.beginPath()
+cvs.arc(500,500,320,0,2*Math.PI,true)
+cvs.strokeStyle='brown';
+cvs.lineWidth=2
+cvs.stroke()
+/* cvs.closePath() */
+cvs.beginPath()
+cvs.translate(500,500)
+
+
+
+cvs.save()
+cvs.rotate(h*30*Math.PI/180)
+cvs.fillRect(-10,-4,210,10)
+cvs.restore()
+
+cvs.save()
+cvs.rotate(m*6*Math.PI/180)
+cvs.fillStyle='black'
+cvs.fillRect(-15,-3,250,6)
+cvs.restore()
+
+cvs.save()
+cvs.rotate(s*6*Math.PI/180)
+cvs.fillStyle='black'
+cvs.fillRect(-18,-1,280,2)
+cvs.restore()
+
+
+cvs.arc(0,0,8,0,2*Math.PI,true)
+cvs.fillStyle='gray'
+cvs.fill()
+cvs.fillStyle='black'
+for(let i=0;i<12;i++){
+  cvs.beginPath()
+ cvs.fillRect(0,-300,3,30)
+ cvs.save()
+ let mytime;
+ mytime=i
+if(i==0){
+  mytime=12
+}
+cvs.translate(0,-240)
+cvs.rotate(i*-30*Math.PI/180)
+
+ cvs.font="40px Verdana";
+ cvs.fillText(mytime,-20,0)
+
+ cvs.restore()
+ for(let i=0;i<4;i++){
+  cvs.rotate(6*Math.PI/180)
+ cvs.fillRect(0,-300,2,15)
+ }
+ cvs.rotate(6*Math.PI/180)
+}
+cvs.restore()
+cvs.save()
+cvs.font="20px Verdana";
+cvs.fillStyle='red'
+cvs.fillText(`本网站专用时钟请勿盗用`,400,650)
+cvs.restore()
+cvs.save()
+cvs.font="50px Verdana";
+cvs.fillStyle='red'
+cvs.fillText(`${showcontiner}`,350,100)
+cvs.restore()
+}
+/* cvs.fillText(1) */
+setInterval(showtime,1000)
+/* console.log(data.getHours());
+console.log(data.getMinutes())
+console.log(); */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* for(let i=1;i<10;i++){
+  cvs.beginPath()
+  cvs.save()
+  cvs.translate(500,500)
+  cvs.rotate((36*i)*Math.PI/180) 
+  cvs.fillRect(0,0,50,5)
+  cvs.restore()
+} */
+
+  </script>
+</body>
+</html>

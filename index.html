@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="rest.css">
+</head>
+
+<body>
+  <div class="index_continer">
+    <div class="index_tittle">
+      <div class="index_video"><a href="./video.html">观看精美视频</a></div>
+      <div class="index_time"></div>
+      <div class="index_back"><a href="./index.html">返回主页</a></div>
+      <div class="index_about">关于本店
+        <div class="push">
+          <h3>本店是一个抽取优惠卷购书页面</h3>
+          <h3>所有图书将在规定时间开始售卖</h3>
+          <h3>规定时间每天并不相同</h3>
+          <h3>请去查看今天抽奖时间了解今天抽奖时间</h3>
+          <h3>图书一旦售卖完毕今日不在补货</h3>
+        </div>
+      </div>
+    </div>
+    <div class="swiper">
+      <div class="leftarrow">《</div>
+      <div class="rightarrow">》</div>
+    </div>
+    <div class="award">
+      <div class="describe">抽奖区域</div>
+      <div class="wrap">
+        <div class="txts">点击开奖</div>
+        <div class="Mongolia">开奖区(每人每天三次机会)</div>
+      </div>
+    </div>
+    <div class="showtime">
+      <div class="describe">本日图书展示区</div>
+      <div class="bookwrap"></div>
+    </div>
+  </div>
+  <script>
+    let url = ['./src/book1.jpg', './src/book2.jpg', './src/book3.jpg', './src/book4.jpg', './src/book5.jpg', './src/book1.jpg']
+    let swiper = document.querySelector('.swiper');
+
+    url.forEach(v => {
+      swiper.innerHTML = swiper.innerHTML + `<div class="swiperitem">
+    <div class="continer">
+  <img src="${v}" alt="">
+  <div>
+</div>`
+    })
+    let item = document.querySelectorAll('.swiperitem')
+    let timer;
+    let distance = 0;
+    function swpierinit() {
+      start()
+      arrow()
+    }
+    function start() {
+      if (timer) {
+        clearInterval(timer)
+      }
+      timer = setInterval(() => {
+        if (distance === -4500) {
+          clearInterval(timer);
+          distance = 0;
+          start()
+        }
+        else if (Math.abs(distance % 900) === -0 && distance != 4500) {
+          clearInterval(timer)
+          setTimeout(() => {
+            distance -= 10;
+            start()
+          }, 2000)
+        }
+        else {
+          distance -= 5;
+          item.forEach(v => {
+            v.style.transform = `translate(${distance}px)`
+          })
+        }
+      }, 50)
+    }
+    function arrow() {
+      let leftarrow = document.querySelector('.leftarrow')
+      let rightarrow = document.querySelector('.rightarrow')
+      leftarrow.addEventListener('click', function () {
+        clearInterval(timer);
+
+        let count = -Math.floor(distance / 900)
+        distance = -count * 900
+        if (count >= 5) {
+          distance = 0
+        }
+        item.forEach(v => {
+          v.style.transform = `translate(${distance}px)`
+        })
+        start()
+      })
+      rightarrow.addEventListener('click', function () {
+        clearInterval(timer);
+        let count = -Math.floor(distance / 900)
+        distance = -count * 900
+        if (count <= -1) {
+          distance = -3600
+        }
+        console.log(count);
+
+        console.log(distance);
+        item.forEach(v => {
+          v.style.transform = `translate(${distance}px)`
+        })
+        start()
+      })
+    }
+    swpierinit()
+    let settime = 0;
+    let flat = true
+    let btn = document.querySelector('.txts');
+    let show = document.querySelector('.Mongolia')
+    btn.addEventListener('click', function () {
+      if (flat) {
+        settime++
+        if (settime > 3) {
+          show.innerHTML = `<span style="color:rgba(0, 0, 0,.5)">您今日的次数已用完</span>`
+        }
+        else {
+          award(0.3)
+        }
+      }
+    })
+    function award(probability) {
+      if (probability < 0 || probability > 1) {
+        console.log('请输入0-1之间的数字');
+
+      }
+      else if (random - new Date().getHours() > 0) {
+        show.innerHTML = `<span style="color:rgba(0, 0, 0,.5)">还没有到抽奖时间</span>`
+
+      }
+      else {
+        show.style.backgroundColor = 'white'
+        let number = Math.random()
+        if (number > probability) {
+          show.innerHTML = `<span style="color:rgba(0, 0, 0,.5)">很遗憾您没有中奖</span>
+    <div class="back">返回></div>
+    `;
+          flat = false;
+          back()
+        } else {
+          show.innerHTML = `<span style="color:rgba(0, 0, 0,.5)"><a href="./css3.html">恭喜你中奖了请点击链接查看</a></span>
+    <div class="back">返回></div>
+    `;
+          flat = false
+          back()
+        }
+      }
+    }
+
+    function back() {
+      let back = document.querySelector('.back');
+      back.addEventListener('click', function () {
+        show.innerHTML = `<div class="Mongolia">开奖区(每人每天三次机会)</div>`
+        flat = true
+      })
+    }
+    let random = Math.round(Math.random() * 24)
+
+    let indextime = document.querySelector('.index_time')
+    indextime.innerHTML = `<a href="./canvas3.html?${random}">查看今天抽奖时间</a>`
+
+    function bookcreate() {
+      let bookwrap = document.querySelector('.bookwrap');
+      url.forEach(v => {
+        bookwrap.innerHTML += `<div style="height:320px"><a href="./shopcar.html"><img style="width:280px;height:250px;" src="${v}"></img><div style="margin-top:10px;color:gray;font-size:17px">本图书由张伟编写内容丰富知识广泛</div><div style="color:red;font-size:20px;font-weight:600">￥88</div></a></div>`
+      })
+    }
+    bookcreate()
+  </script>
+</body>
+
+</html>

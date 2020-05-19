@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    img {
+      width: 100px;
+      height: 100px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    table {
+      width: 80%;
+      margin: 0 auto;
+      text-align: center;
+      border-collapse: collapse;
+      font-size: 25px;
+    }
+
+    td {
+      border: 1px solid gray;
+    }
+
+    table tbody:nth-child(1) {
+      font-weight: bold
+    }
+
+    span {
+      vertical-align: 35px
+    }
+   label{
+     position: relative;
+     left:200px;
+     font-size: 25px;
+   }
+
+input{
+  width: 20px;
+  height: 25px;
+}
+
+.showcar input{
+  vertical-align: 27px;
+}
+.showcar tr td:nth-child(1){
+  text-align: left;
+  width: 450px;
+}
+.showcar .del{
+  width: 80px;
+  height: 40px;
+}
+.showcar span{
+  vertical-align: -3px;
+}
+.countz{
+  width: 80%;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 25px;
+      border: 1px solid black;
+}
+  </style>
+</head>
+
+<body>
+  <h1>购物清单</h1>
+  <table class="show">
+
+    <tr>
+      <td>书名</td>
+      <td>单价</td>
+      <td>作者</td>
+      <td>出版社</td>
+      <td>库存</td>
+      <td>操纵</td>
+    </tr>
+  </table>
+  <h1>购物车</h1>
+  <label for="">
+    <input type="checkbox" class="all">
+    全选
+  </label>
+  <table class="showcar">
+    <tr>
+      <td>书名</td>
+      <td>单价</td>
+      <td>数量</td>
+      <td>金额</td>
+      <td>删除</td>
+    </tr>
+    
+  </table>
+ <table>
+   <tr>
+     <td style="width: 65%;">总计</td>
+     <td class="showcount">0</td>
+     <td>删除</td>
+   </tr>
+ </table>
+  <script>
+    let path1 = {
+      id: 'a',
+      img: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1773946777,1291172341&fm=26&gp=0.jpg',
+      name: 'book1',
+      price: 125,
+      author: 'z-book1',
+      public: 'z-public1',
+      count: 999,
+      do: '加入购物车',
+      ccount:0
+    }
+    let path2 = {
+      id: 'b',
+      img: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2001926771,1273495562&fm=26&gp=0.jpg',
+      name: 'book2',
+      price: 88,
+      author: 'z-book2',
+      public: 'z-public2',
+      count: 666,
+      do: '加入购物车',
+      ccount:0
+    }
+
+    let path3 = {
+      id: 'c',
+      img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1586169814414&di=774d6e1215c100c2e19751c1630d7e6a&imgtype=0&src=http%3A%2F%2Fmall9.iqiyipic.com%2Fmall%2F20170831%2F16%2F7c%2Fmall_59a8056774d579683d0e167c_1x1.jpg',
+      name: 'book3',
+      price: 66,
+      author: 'z-book3',
+      public: 'z-public3',
+      count: 999,
+      do: '加入购物车',
+      ccount:0
+    }
+
+    let path4 = {
+      id: 'd',
+      img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1586169752651&di=879d1d934d7864ad74ec5b321ac31f8f&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01b88455684a230000012716c139af.jpg',
+      name: 'book4',
+      price: 300,
+      author: 'z-book4',
+      public: 'z-public4',
+      count: 999,
+      do: '加入购物车',
+      ccount:0
+    }
+    let path5 = {
+      id: 'e',
+      img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1586169713856&di=8cc665876de27c7231f547e9bd0c1c6c&imgtype=0&src=http%3A%2F%2Fpic.baike.soso.com%2Fp%2F20131221%2F20131221073254-729907505.jpg',
+      name: 'book5',
+      price: 600,
+      author: 'z-book5',
+      public: 'z-public5',
+      count: 999,
+      do: '加入购物车',
+      ccount:0,
+    }
+   
+    let tr = document.querySelector('.show')
+    let es;
+    let showcount=document.querySelector('.showcount')
+    function create(parmas) {
+      return `<tr class="${parmas.id}">
+   <td>
+    
+     <img src="${parmas.img}" alt="">
+     <span>${parmas.name}</span>
+   </td>
+   <td>
+    ${parmas.price}
+    </td>
+   <td>
+    ${parmas.author}
+    </td>
+   <td>
+    ${parmas.public}
+    </td>
+   <td>
+    ${parmas.count}
+      </td>
+   <td>
+     <button>${parmas.do}</button>
+   </td>
+ </tr>
+  
+  `
+    }
+    function createshopcar(parmas){ 
+     
+      parmas.count=parmas.count - parmas.ccount
+      return `<tr class="${parmas.id}">
+   <td>
+    <input type="checkbox" class="fen" onclick="watcher()">
+     <img src="${parmas.img}" alt="">
+     <span>${parmas.name}</span>
+   </td>
+   <td>
+    
+    ${parmas.price}
+    
+    </td>
+   <td>
+    <button class='add' onclick="add(event)">+</button>
+    <span>
+    ${parmas.ccount}
+    </span>
+    <button class='sub' onclick='subs(event)'>-</button>
+    </td>
+   <td>
+    ${parmas.price*parmas.ccount}
+    </td>
+   <td>
+     <button class='del' onclick="del(event)">删除</button>
+   </td>
+ </tr>
+  
+  `
+    }
+    tr.innerHTML = tr.innerHTML + create(path1) + create(path2) + create(path3) + create(path4) + create(path5)
+    let btn=document.querySelectorAll('button')
+    console.log(btn);
+    
+    let tables=document.querySelector('.showcar')
+    for(let i=0;i<btn.length;i++){
+      btn[i].addEventListener('click',function(e){
+  
+       
+        if(i==0){
+          if(path1.ccount>0){
+            let el1=document.querySelectorAll('.a')[1]       
+            path1.ccount++ 
+            path1.count--
+          el1.remove()
+           tables.innerHTML=tables.innerHTML+createshopcar(path1)
+          }
+          else{
+            path1.ccount++
+            tables.innerHTML=tables.innerHTML+createshopcar(path1)
+          }   
+        }
+        else if(i==1){
+          if(path2.ccount>0){
+            let el2=document.querySelectorAll('.b')[1] 
+            path2.ccount++
+            path2.count--
+            el2.remove()
+           tables.innerHTML=tables.innerHTML+createshopcar(path2)
+          }
+          else{
+            path2.ccount++
+            tables.innerHTML=tables.innerHTML+createshopcar(path2)
+          }
+          
+        }
+        else if(i==2){
+          if(path3.ccount){
+            let el3=document.querySelectorAll('.c')[1] 
+            path3.ccount++
+            patsceh3.count--
+            el3.remove()
+           tables.innerHTML=tables.innerHTML+createshopcar(path3)
+          }
+          else{
+            path3.ccount++
+            tables.innerHTML=tables.innerHTML+createshopcar(path3)
+          }
+         
+        }
+        else if(i==3){
+          if(path4.ccount){
+            let el4=document.querySelectorAll('.d')[1] 
+            path4.ccount++
+            path4.count--
+            el4.remove()
+           tables.innerHTML=tables.innerHTML+createshopcar(path4)
+          }
+          else{
+            path4.ccount++
+            tables.innerHTML=tables.innerHTML+createshopcar(path4)
+          }
+         
+        }
+        else if(i==4){
+          if(path5.ccount){
+            let el5=document.querySelectorAll('.e')[1] 
+            path5.ccount++
+            path5.count--
+            el5.remove()
+           tables.innerHTML=tables.innerHTML+createshopcar(path5)
+          }
+          else{
+            path5.ccount++
+            tables.innerHTML=tables.innerHTML+createshopcar(path5)
+          }
+         
+        }
+        es= e
+        e.target.parentNode.parentNode.children[4].innerText= parseInt(e.target.parentNode.parentNode.children[4].innerText)-1
+        showcount.innerText=path1.ccount*path1.price+path2.ccount*path2.price+path3.ccount*path3.price+path4.ccount*path4.price+path5.ccount*path5.price
+      })
+    }
+function del(e){
+if( e.target.parentNode.parentNode.className=='a'){
+  path1.ccount=0
+  es.target.parentNode.parentNode.children[4].innerText=999
+}
+ else if( e.target.parentNode.parentNode.className=='b') {
+   path2.ccount=0
+   es.target.parentNode.parentNode.children[4].innerText=666
+ }
+ else if(e.target.parentNode.parentNode.className=='c'){
+  path3.ccount=0
+  es.target.parentNode.parentNode.children[4].innerText=999
+ }
+ else if(e.target.parentNode.parentNode.className=='d'){
+   path4.ccount=0
+   es.target.parentNode.parentNode.children[4].innerText=999
+ }
+ else if(e.target.parentNode.parentNode.className=='e'){
+   path5.ccount=0
+   es.target.parentNode.parentNode.children[4].innerText=999
+ }
+
+e.target.parentNode.parentNode.parentNode.remove();
+showcount.innerText=path1.ccount*path1.price+path2.ccount*path2.price+path3.ccount*path3.price+path4.ccount*path4.price+path5.ccount*path5.price
+}
+let sub=document.querySelectorAll('.sub') 
+function add(e){
+  if( e.target.parentNode.parentNode.className=='a'){
+  path1.ccount++ 
+}
+ else if( e.target.parentNode.parentNode.className=='b') {
+   path2.ccount++
+ }
+ else if(e.target.parentNode.parentNode.className=='c'){
+  path3.ccount++
+ }
+ else if(e.target.parentNode.parentNode.className=='d'){
+   path4.ccount++
+ }
+ else if(e.target.parentNode.parentNode.className=='e'){
+   path5.ccount++
+ }
+ e.target.parentNode.parentNode.children[2].children[1].innerText=parseInt(e.target.parentNode.parentNode.children[2].children[1].innerText)+1
+e.target.parentNode.parentNode.children[3].innerText=parseInt(e.target.parentNode.parentNode.children[2].children[1].innerText)*parseInt(e.target.parentNode.parentNode.children[1].innerText)
+es.target.parentNode.parentNode.children[4].innerText=parseInt(es.target.parentNode.parentNode.children[4].innerText)-1
+showcount.innerText=path1.ccount*path1.price+path2.ccount*path2.price+path3.ccount*path3.price+path4.ccount*path4.price+path5.ccount*path5.price
+}
+function subs(e){
+  if( e.target.parentNode.parentNode.className=='a'){
+  path1.ccount--
+}
+ else if( e.target.parentNode.parentNode.className=='b') {
+   path2.ccount--
+ }
+ else if(e.target.parentNode.parentNode.className=='c'){
+  path3.ccount--
+ }
+ else if(e.target.parentNode.parentNode.className=='d'){
+   path4.ccount--
+ }
+ else if(e.target.parentNode.parentNode.className=='e'){
+   path5.ccount--
+ } 
+ e.target.parentNode.parentNode.children[2].children[1].innerText=parseInt(e.target.parentNode.parentNode.children[2].children[1].innerText)-1
+e.target.parentNode.parentNode.children[3].innerText=parseInt(e.target.parentNode.parentNode.children[2].children[1].innerText)*parseInt(e.target.parentNode.parentNode.children[1].innerText)
+es.target.parentNode.parentNode.children[4].innerText=parseInt(es.target.parentNode.parentNode.children[4].innerText)+1
+showcount.innerText=path1.ccount*path1.price+path2.ccount*path2.price+path3.ccount*path3.price+path4.ccount*path4.price+path5.ccount*path5.price
+}
+let all=document.querySelector('.all')
+
+
+all.addEventListener('click',function(){
+  let fen=document.querySelectorAll('.fen')
+  if(all.checked){
+    
+   for(let i=0;i<fen.length;i++){
+     fen[i].checked=true
+     
+   }
+    
+  }
+  else{
+    for(let i=0;i<fen.length;i++){
+     fen[i].checked=false
+     
+   }
+  }
+})
+function watcher(){
+ let fen =document.querySelectorAll('.fen')  
+  fen.forEach(v=>{
+  v.addEventListener('click',function(){
+    console.log(fen);
+    let flat;
+    fen.forEach(v=>{
+      if(v.checked===false){
+        flat=false
+        return 
+      }
+      else{
+        flat=true
+      }
+    })
+    
+    if(flat===false){
+      all.checked=flat
+    }
+    else{
+      all.checked=true
+    }
+  })
+})
+}
+ </script>
+</body>
+
+</html>

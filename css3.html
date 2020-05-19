@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css3.css">
+    <style>
+.zm{
+    position: absolute;
+    width: 340px;
+    height: 470px;
+   left: 50%;
+   top: 50%;
+   margin-top: -235px;
+   margin-left: -170px;
+   transition:2s;
+   box-shadow:10px 15px 30px 16px rgba(0,0,0,0.5);
+}
+.neirong{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: -1;
+}
+.zm::before{
+    content: "";
+    position: absolute;
+    
+    width: 100%;
+    height: 5px;
+    background-color: darkgray;
+    top: -5px;
+    transform-origin: bottom;
+    transform:skewX(135deg); 
+}
+.zm::after{
+    content: "";
+    position: absolute;
+    width: 5px;
+    height: 100%;
+    top: 0px;
+    right: -5px;
+    transform-origin: left;
+    background-color: darkgray;
+    transform:skewY(135deg)
+}
+.zm:hover{
+    transform:rotate(30deg); 
+   
+}
+.tupian{
+    transition: 2s ;
+    transform-origin:left center 0;
+}
+.zm:hover .tupian{
+    transform: rotateY(135deg);
+}
+
+    </style>
+</head>
+<body>
+    <div class="zm">
+        <img class="tupian"src="./src/css3.jpg"  width="340px"  height="470px;"> 
+        <span class="neirong">
+            <h1>你居然翻开了</h1>
+            <h3>这是网站给你的惊喜</h3>
+            <h2 class="discount"></h2>
+            <h3>凭借截图可以找工作人员</h3>
+            <h3>他会给你兑换优惠卷</h3>
+            <h3>是不是非常开心啊</h3>
+            <h3>这个惊喜不是每个人都有哦</h3>
+        </span>
+    </div>
+
+    <script>
+let discount=document.querySelector('.discount')
+let countnumber=(Math.random()*10).toFixed(1)
+discount.innerHTML=`您获得的折扣是${countnumber}折`
+
+    </script>
+</body>
+</html>
